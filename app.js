@@ -16,6 +16,8 @@ function loadEventListeners() {
     taskList.addEventListener("click", removeTask);
     // Clear task event
     clearBtn.addEventListener("click", clearTasks);
+    // Filter tasks event
+    filter.addEventListener("keyup", filterTasks);
 }
 
 // Add Task
@@ -65,7 +67,23 @@ function clearTasks() {
     // Faster option
     while(taskList.firstChild) {
         taskList.removeChild(taskList.firstChild);
-
     }
+}
+
+// Filter Tasks
+function filterTasks(e) {
+    const text = e.target.value.toLowerCase();
+
+    /* querySelectorAll returns node list vs getElementByClass
+    returns an HTML collection then you need to convert to a list to use forEach() */
+
+    document.querySelectorAll(".collection-item").forEach(function(task){
+        const item = task.firstChild.textContent;
+        if(item.toLowerCase().indexOf(text) != -1){
+            task.style.display = "block";
+        } else{
+            task.style.display = "none";
+        }
+    });
 
 }
